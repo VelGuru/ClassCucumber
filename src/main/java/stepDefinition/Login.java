@@ -8,12 +8,20 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.junit.Assert;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import PageObject.AdminManagementPage;
 import PageObject.AdminPage;
+import PageObject.DashboardPage;
+import PageObject.SuppliersManagementPage;
+
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import ru.yandex.qatools.ashot.AShot;
@@ -23,11 +31,12 @@ import util.DriverManager;
 
 public class Login 
 {
+	
 	public WebDriver driver;
 	@Before
-	public void preCondition()
+	public void preCondition(Scenario scenario)
 	{
-		String broswerName=DriverManager.getProperty("broswer");
+		String broswerName="chrome";
 		driver = DriverManager.broswerType(broswerName); 
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
@@ -35,8 +44,10 @@ public class Login
 	}
 	
 	@After
-	public void postCondition()
+	public void postCondition(Scenario scenario) throws InterruptedException
 	{
+		byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+	    scenario.attach(screenshot, "image/png", "name");
 		driver.quit();
 	}
 	
@@ -84,5 +95,44 @@ public class Login
 			catch (Exception e) {
 
 			}
+	}
+	
+	@Then("Click on Account and navigate to Admin")
+	public void Click_on_acooutn_admin()
+	{
+		DashboardPage dashboardPage=new DashboardPage(driver);
+		dashboardPage.lnk_accounts.click();
+		dashboardPage.lnk_Admins.click();
+	}
+	
+	@And("Creating new Admin user")
+	public void creating_new_admin()
+	{
+		AdminManagementPage adminManagementPage=new AdminManagementPage(driver);
+		adminManagementPage.btn_add.click();
+		adminManagementPage.txt_firstName.sendKeys("Sneha");
+		adminManagementPage.txt_lastName.sendKeys("M");
+		adminManagementPage.txt_email.sendKeys("sneha.m@gmail.com");
+		adminManagementPage.txt_password.sendKeys("adsfasdfasdf");
+	}
+	
+	@Then("Click on Account and navigate to suppliers")
+	public void Click_on_acooutn_suppliers()
+	{
+		DashboardPage dashboardPage=new DashboardPage(driver);
+		dashboardPage.lnk_accounts.click();
+		dashboardPage.lnk_Suppliers.click();
+	}
+	
+	@And("Creating new suppliers user")
+	public void creating_new_suppliers()
+	{
+		SuppliersManagementPage suppliersManagementPage=new SuppliersManagementPage(driver);
+		suppliersManagementPage.btn_add.click();
+		suppliersManagementPage.txt_firstName.sendKeys("Hari");
+		suppliersManagementPage.txt_lastName.sendKeys("U");
+		suppliersManagementPage.txt_email.sendKeys("hari.u@gmail.com");
+		suppliersManagementPage.txt_password.sendKeys("adsfasdfasdf");
+		
 	}
 }

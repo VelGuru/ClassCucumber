@@ -10,6 +10,15 @@ public class DashboardPage {
 	@FindBy(linkText="Bookings")
 	private WebElement lnk_Booking;
 	
+	@FindBy(partialLinkText="Accounts")
+	public WebElement lnk_accounts;
+	
+	@FindBy(linkText="Admins")
+	public WebElement lnk_Admins;
+	
+	@FindBy(partialLinkText="Suppliers")
+	public WebElement lnk_Suppliers;
+	
 	public DashboardPage(WebDriver driver)
 	{
 		PageFactory.initElements(driver, this);
