@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 public class AdminManagementPage 
 {
 	@FindBy(xpath="//button[contains(text(),'Add')]")
-	public WebElement btn_add;
+	public WebElement btn_adds;
 	
 	@FindBy(name="fname")
 	public WebElement txt_firstName;
