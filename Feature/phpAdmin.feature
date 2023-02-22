@@ -34,3 +34,8 @@ Given Enter the valid Admin credentials
 	Scenario: Creating suppliers Account
    Then Click on Account and navigate to suppliers
    And Creating new suppliers user
+   
+   @Customer @smoke
+	Scenario: Creating suppliers Account
+   Then Click on Account and navigate to suppliers
+   And Creating new suppliers user
